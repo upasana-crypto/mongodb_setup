@@ -1,0 +1,39 @@
+version: '3.1'
+services:
+  mongo_one:
+    container_name: mongo1
+    image: mongo:latest
+    command: mongod --replSet my-mongo-set
+    ports: 
+      - 27017:27017
+    networks:
+      - my-mongo-cluster
+
+  mongo_two:
+    container_name: mongo2
+    image: mongo:latest
+    command: mongod --replSet my-mongo-set
+    ports: 
+      - 30002:27017
+    networks:
+      - my-mongo-cluster
+
+  mongo3:
+    container_name: mongo3
+    image: mongo:latest
+    command: mongod --replSet my-mongo-set
+    ports: 
+      - 30003:27017
+    networks:
+      - my-mongo-cluster
+
+  watchtower:
+    image: containrrr/watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+networks:
+  my-mongo-cluster: 
+
+
+  
